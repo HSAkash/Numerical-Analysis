@@ -134,6 +134,7 @@ void bisections(vector<vector<int>> int_map, double a, double b, double epsilon)
 int main(){
 
     string str;
+    //Input should be like this ( 2x^4 +4x^3 -x^2+10x -2 )
     cout << "Enter the function: ";
     getline(cin, str);
     
