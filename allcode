@@ -1,0 +1,794 @@
+def func(x):
+    return x**3-x**2+2
+
+
+def bisection(a, b, er):
+    if func(a)*func(b) > 0:
+        print(f"There is no root between {a} and {b} points")
+        return
+    root = a
+    while abs(a-b) > er:
+        root = (a+b)/2
+        if func(root)==0:
+            break
+        if func(root)*func(a) < 0:
+            b = root
+        else:
+            a = root
+
+    print(f"root is {round(root, 4)}")
+
+
+
+
+
+
+if __name__ == '__main__':
+    a = -200
+    b = 300
+    er = 0.01
+    bisection(a, b, er)
+    
+    
+
+
+def func(x):
+    return x**3-x**2+2
+
+
+def bisection(a, b, Iter):
+    if func(a)*func(b) > 0:
+        print(f"There is no root between {a} and {b} points")
+        return
+    root = a
+    for _ in range(Iter):
+        root = (a*func(b) - b*func(a))/(func(b)-func(a))
+        if func(root)==0:
+            break
+        if func(root)*func(a) < 0:
+            b = root
+        else:
+            a = root
+
+    print(f"root is {round(root, 4)}")
+
+
+
+
+
+
+if __name__ == '__main__':
+    a = -200
+    b = 300
+    Iter = 1000000
+    bisection(a, b, Iter)
+    
+    
+    
+def func(x):
+    return x**3-x**2+2
+
+
+def defferFunc(x):
+    return 3*x**2 - 2*x
+
+
+def newtonRepson(er):
+    root = -2
+    h = func(root)/defferFunc(root)
+    while abs(h)>er:
+        h = func(root)/defferFunc(root)
+        root -= h
+    print(f"root is {round(root, 4)}")
+
+
+
+
+if __name__ == '__main__':
+    er = 0.001
+    newtonRepson(er)
+    
+    
+    
+    
+def func(x):
+    return x**3-x**2+2
+
+
+def secant(a, b, Iter):
+    if func(a)*func(b) > 0:
+        print(f"There is no root between {a} and {b} points")
+        return
+    root = a
+    for _ in range(Iter):
+        root = (a*func(b) - b*func(a))/(func(b)-func(a))
+        if func(root)==0:
+            break
+        b = root
+
+    print(f"root is {round(root, 4)}")
+
+
+
+
+
+
+if __name__ == '__main__':
+    a = -20
+    b = 3
+    Iter = 1000000
+    secant(a, b, Iter)
+    
+    
+    
+   from unittest import result
+
+
+def fact(n):
+    sum = 1
+    for i in range(1,n+1):
+        sum *= i
+    return sum
+
+def get_p_values(p, n):
+    sum = 1
+    for i in range(n):
+        sum *= (p-i)
+    return sum
+
+
+def Forward(X, Y, x):
+    y = [[0 for _ in range(len(Y))] for _ in range(len(Y))]
+    for i in range(len(Y)):
+        y[i][0]= Y[i]
+
+    for i in range(len(Y)):
+        for j in range(len(Y)-i-1):
+            y[j][i+1] = y[j+1][i] - y[j][i]
+
+    for i in range(len(Y)):
+        print(f"{X[i]} {y[i]}")
+
+    x0 = X[0]
+    h = X[1]-X[0]
+    p = (x-x0) / h
+
+    result = y[0][0]
+
+    for i in range(1, len(Y)):
+        result += (get_p_values(p, i)*y[0][i]/fact(i))
+
+    print(result)
+
+
+
+
+
+
+if __name__ == '__main__':
+    X = [ 45, 50, 55, 60 ]
+    Y = [0.7071, 0.7660, 0.8192, 0.8660]
+    x = 52
+    Forward(X, Y, x)
+    
+    
+    
+from unittest import result
+
+
+def fact(n):
+    sum = 1
+    for i in range(1,n+1):
+        sum *= i
+    return sum
+
+def get_p_values(p, n):
+    sum = 1
+    for i in range(n):
+        sum *= (p+i)
+    return sum
+
+
+def Forward(X, Y, x):
+    y = [[0 for _ in range(len(Y))] for _ in range(len(Y))]
+    for i in range(len(Y)):
+        y[i][0]= Y[i]
+
+    for i in range(1, len(Y)):
+        for j in range(i, len(Y)):
+            y[j][i] = y[j][i-1] - y[j-1][i-1]
+
+    for i in range(len(Y)):
+        print(f"{X[i]} {y[i]}")
+
+    xn = X[-1]
+    h = X[-1]-X[-2]
+    p = (x-xn) / h
+
+    result = y[-1][0]
+    for i in range(1, len(Y)):
+        result += (get_p_values(p, i)*y[-1][i]/fact(i))
+
+    print(result)
+
+
+
+
+
+
+if __name__ == '__main__':
+    X = [1891, 1901, 1911,1921, 1931 ]
+    Y = [46, 66, 81, 93, 101]
+    x = 1925
+    Forward(X, Y, x)
+    
+    
+    
+    
+
+def lagrange(X, Y, x):
+    n = len(X)
+    sum = 0
+    for i in range(n):
+        temp_sum = Y[i]
+        print(f"res = {temp_sum}", end=' ')
+        for j in range(n):
+            if i != j:
+                temp_sum = temp_sum * (x-X[j])/(X[i]-X[j])
+                print(f"x-x[j] = {x-X[j]} x[i]-x[j]={X[i]-X[j]}", end=' ')
+        sum += temp_sum
+        print(f"sum = {sum}", end=' ')
+        print(f'temp = {temp_sum}')
+    print(sum)
+
+
+
+
+if __name__ == '__main__':
+    X = [0,1,2,5]
+    Y = [2,3,12,147]
+    x = 3
+    lagrange(X, Y, x)    
+    
+    
+    
+    
+    
+    
+    
+    
+import math
+
+def func(x):
+    return math.log(x)
+
+
+
+def Simpson(ll, ul, n):
+    h = (ul-ll)/n
+
+    x = list()
+    fx = list()
+    for i in range(n+1):
+        x.append(ll+i*h)
+        fx.append(func(x[i]))
+    
+    result = 0
+    for i in range(n+1):
+        if i==0 or i==n:
+            result += fx[i]
+        elif i%2 != 0:
+            result += 4 * fx[i]
+        else:
+            result += 2 * fx[i]
+    result *= h/3
+    print(result)
+
+
+
+
+if __name__ == '__main__':
+    lower_limit = 4 # Lower limit
+    upper_limit = 5.2 # Upper limit
+    n = 6 # Number of interval
+    Simpson(lower_limit, upper_limit, n)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+
+def func(x, y):
+    return x + y + x * y
+
+def euler(x0, y, h, x):
+    while x0 < x:
+        temp = y
+        y = y + h * func(x0, y)
+        x0 += h
+    print(y)
+
+
+
+
+if __name__ == '__main__':
+    x0 = 0
+    y0 = 1
+    h = 0.025
+
+
+    x = 0.1
+    euler(x0, y0, h, x)    
+    
+    
+    
+    
+    
+
+def dxdy(x, y):
+    return x +y - 2
+
+def rungeKutta(x0, y0, x, h):
+    n = round((x - x0)/h)
+
+    y = y0
+    for i in range(1, n+1):
+        k1 = h * dxdy(x0, y)
+        k2 = h * dxdy(x0 + 0.5 * h, y + 0.5 * k1)
+        y = y + (1./6.) * (k1 + 2* k2)
+        x0 = x0 + h
+    return y
+
+
+
+
+
+
+if __name__ == "__main__" :
+    x0 = 0; y = 1
+    x = 2; h = 0.2
+    print("y(x) =",rungeKutta(x0, y, x, h))
+    
+    
+    
+    
+    
+    
+def dxdy(x, y):
+    return (x-y)/2
+
+
+def kutta(x0, y, x, h):
+    n = round((x - x0)/h)
+
+    for i in range(1, n+1):
+        k1 = h * dxdy(x0, y)
+        k2 = h * dxdy(x0 + 0.5 * h, y + 0.5 * k1)
+        k3 = h * dxdy(x0 + 0.5 * h, y + 0.5 * k2)
+        k4 = h * dxdy(x0 + h, y + k3)
+        y = y + (1./6.)*(k1 + 2*k2 + 2*k3 + k4)
+        x0 += h
+    return y
+
+
+if __name__ == "__main__" :
+    x0 = 0; y = 1
+    x = 2; h = 0.2
+    print("y(x) =",kutta(x0, y, x, h))
+
+
+
+#include<iostream>
+using namespace std;
+// x**3-x**2+2
+double func(double x){
+    return (x*x*x - x*x + 2);
+}
+
+void bisection(double a, double b, double er){
+    if(func(a)*func(b)>0){
+        cout << "there is no root"<<endl;
+        return;
+    }
+    double root = a;
+    while(abs(a-b)>er){
+        root = (a+b)/2;
+        if(root == 0.0){
+            break;
+        }
+        if(func(root)*func(a)<0)b=root;
+        else a = root;
+    }
+    cout << "root is : " << root<< endl;
+}
+
+int main(){
+    double a = -200, b = 300, er = 0.01;
+    bisection(a, b, er);
+
+    return 0;
+}
+
+
+
+#include<iostream>
+using namespace std;
+
+
+double func(double x){
+    return (x*x*x - x*x + 2);
+}
+
+
+void falsi(double a, double b, int It){
+    if(func(a)* func(b)>0){
+        cout<<"There is no root"<<endl;
+        return;
+    }
+    double root = a;
+    for(int i=0; i<=It;i++){
+        root = (a * func(b) - b * func(a))/(func(b)-func(a));
+        if(root==0.0)break;
+        if(func(a)*func(root)<0)b=root;
+        else a=root;
+    }
+    cout << "root is : "<<root<<endl;
+}
+
+
+int main(){
+    int It = 1000000;
+    double a=-200, b=300;
+    falsi(a, b, It);
+}
+
+
+
+#include<iostream>
+using namespace std;
+// x**3-x**2+2
+double func(double x){
+    return (x*x*x - x*x + 2);
+}
+
+double dxdy(double x){
+    return (3*x*x-2*x);
+}
+
+void bisection(){
+    double root = -3;
+    double h = func(root)/dxdy(root);
+    while(abs(h)>0.001){
+        h = func(root)/dxdy(root);
+        root -= h;
+    }
+    cout << "root is : " << root<< endl;
+}
+
+int main(){
+    bisection();
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+#include<iostream>
+using namespace std;
+
+
+double func(double x){
+    return (x*x*x - x*x + 2);
+}
+
+
+void secant(double a, double b, int It){
+    if(func(a)* func(b)>0){
+        cout<<"There is no root"<<endl;
+        return;
+    }
+    double root = a;
+    for(int i=0; i<=It;i++){
+        root = (a * func(b) - b * func(a))/(func(b)-func(a));
+        if(root==0.0)break;
+        b=root;
+    }
+    cout << "root is : "<<root<<endl;
+}
+
+
+int main(){
+    int It = 1000000;
+    double a=-200, b=300;
+    secant(a, b, It);
+}
+
+
+
+
+#include<iostream>
+using namespace std;
+
+int fact(int n){
+    int res = 1;
+    for(int i=2; i<=n; i++)res *= i;
+    return res;
+}
+
+double p_valu(double p, int n){
+    double res = 1;
+    for(int i = 0; i<n; i++) res *= (res-i);
+    return res;
+}
+
+void Forward(double *X, double *Y, double x, int n){
+    double y[n][n]={0};
+    for(int i=0; i<n;i++){
+        y[i][0]=Y[i];
+    }
+    for (int i = 1; i<n; i++){
+        for(int j=0; j<n-i; j++){
+            y[j][i] = y[j+1][i-1] - y[j][i-1]; 
+        }
+    }
+    for (int i=0; i<n;i++){
+        for(int j=0; j<n;j++){
+            cout<<y[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    double p = (x - X[0])/(X[1]-X[0]);
+
+    double res=y[0][0];
+    for(int i=1;i<n;i++){
+        res += ((p_valu(p, i)*y[0][i])/fact(i));
+    }
+    cout<<res<<endl;
+}
+
+
+
+int main(){
+    double X[] = { 45, 50, 55, 60 };
+    double Y[] = {0.7071, 0.7660, 0.8192, 0.8660};
+    double x = 52;
+    int n = 4;
+    Forward(X, Y, x, n);
+}
+
+
+
+
+
+
+
+
+
+
+#include<iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+int fact(int n){
+    int res = 1;
+    for(int i=2; i<=n; i++)res *= i;
+    return res;
+}
+
+double p_valu(double p, int n){
+    double res = p;
+    for(int i = 1; i<n; i++) res *= (p+i);
+    return res;
+}
+
+void Backward(double *X, double *Y, double x, int n){
+    double y[n][n]={0};
+    for(int i=0; i<n;i++){
+        y[i][0]=Y[i];
+    }
+    for (int i = 1; i < n; i++) {
+        for (int j = n - 1; j >= i; j--)
+            y[j][i] = y[j][i - 1] - y[j - 1][i - 1];
+    }
+ 
+    // Displaying the backward difference table
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j <= i; j++)
+            cout << setw(4) << y[i][j]
+                 << "\t";
+        cout << endl;
+    }
+    double p = (x - X[n-1])/(X[1]-X[0]);
+
+    double res=y[n-1][0];
+    // for(int i=1;i<n;i++){
+    //     res += ((p_valu(p, i)*y[n-1][i])/fact(i));
+    // }
+    for (int i = 1; i < n; i++) {
+        res = res + (p_valu(p, i) * y[n - 1][i]) /fact(i);
+    }
+    cout<<res<<endl;
+}
+
+
+
+int main(){
+    double X[] = { 1891, 1901, 1911, 1921 , 1931};
+    double Y[] = { 46, 66, 81, 93 , 101};
+    double x = 1925.0;
+    int n = 5;
+    Backward(X, Y, x, n);
+}
+
+
+
+
+#include<iostream>
+using namespace std;
+
+
+
+
+void lagrange(int *X, int *Y, int x, int n){
+    double sum = 0.0;
+    for(int i=0; i<n; i++){
+        double res = Y[i];
+        for(int j=0; j<n; j++){
+            if(i!=j){
+                res *= ((x-X[j])/double(X[i]-X[j]));
+            }
+        }
+        sum += res;
+    }
+    cout <<sum <<endl;
+}
+
+int main(){
+    int X[]={0,1,2,5};
+    int Y[]={2,3,12,147};
+    int x = 3, n=4;
+    lagrange(X, Y, x,  n);
+}
+
+
+#include<iostream>
+#include<math.h>
+using namespace std;
+
+float func(float x){
+    return log(x);
+}
+
+
+void simson(float  ll,float ul,int n){
+    float h = (ul-ll)/n;
+    float sum = 0;
+    for(int i=0; i<=n;i++){
+        if(i==0 || i==n)sum += func(ll+i*h);
+        else if(i%2==0)sum += (2*func(ll + i*h));
+        else sum += (4*func(ll + i *h));
+    }
+    sum *= (h/3);
+    cout<<sum<<endl;
+}
+
+int main(){
+    float ll = 4, ul=5.2;
+    int n=6;
+    simson(ll, ul, n);
+}
+
+
+
+
+
+
+#include<iostream>
+#include<math.h>
+using namespace std;
+
+float func(float x){
+    return 1.0/(1+x*x);
+}
+
+
+void simson(float  ll,float ul,int n){
+    float h = (ul-ll)/n;
+    float sum = 0;
+    for(int i=0; i<=n;i++){
+        if(i==0 || i==n)sum += func(ll+i*h);
+        else if(i%3==0)sum += (2*func(ll + i*h));
+        else sum += (3*func(ll + i *h));
+    }
+    sum *= (3*h/8);
+    cout<<sum<<endl;
+}
+
+int main(){
+    float ll = 1, ul=10;
+    int n=10;
+    simson(ll, ul, n);
+}
+
+
+
+
+
+#include<iostream>
+#include <cmath>
+using namespace std;
+
+float dxdy(float x, float y){
+    return x +y - 2;
+}
+
+void kurta(float x0, float y, float h, float x){
+    int n = ceil((x-x0)/h);
+    // cout
+    for(int i=0;i<n;i++){
+        float k1 = h * dxdy(x0, y);
+        float k2 = h * dxdy(x0 + 0.5 * h, y + 0.5 * k1);
+        y = y + (1.0/6.0)*(k1+2*k2);
+        x0 += h;
+    }
+    cout<<y<<endl;
+}
+
+
+int main(){
+    float x0 = 0;
+    float y0 = 1;
+    float h = 0.2;
+
+
+    float x = 2;
+    kurta(x0, y0, h, x);
+}
+
+
+
+#include<iostream>
+#include <cmath>
+using namespace std;
+
+float dxdy(float x, float y){
+    return ((x - y)/2);
+}
+
+void kurta(float x0, float y, float h, float x){
+    int n = (int)((x - x0) / h);
+    // cout
+    for (int i=1; i<=n; i++){
+        float k1 = h * dxdy(x0, y);
+        float k2 = h * dxdy(x0 + 0.5 * h, y + 0.5 * k1);
+        float k3 = h * dxdy(x0 + 0.5 * h, y + 0.5 * k2);
+        float k4 = h * dxdy(x0 + h, y + k3);
+        y = y + (1.0/6.0)*(k1+2*k2+2*k3+k4);
+        x0 += h;
+    }
+    cout<<y<<endl;
+}
+
+
+int main(){
+    float x0 = 0;
+    float y0 = 1;
+    float h = 0.2;
+
+
+    float x = 2;
+    kurta(x0, y0, h, x);
+}
+
